@@ -1,4 +1,6 @@
 # app.py - 你的第一个Flask应用
+import os
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from datetime import datetime
 from weather_fetcher import fetch_weather, save_weather_to_db, get_latest_weather, get_weather_history
@@ -20,6 +22,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭警告
 
 # 创建数据库对象
 init_extensions(app)
+
+# --- 创建数据库表（在首次运行时） ---
+# 这段代码会检查所有定义好的模型，并在数据库中创建对应的表
+with app.app_context():
+    db.create_all()
+    print("✅ 数据库表已创建/验证")
 
 
 def generate_password_hash(password):
@@ -58,12 +66,6 @@ def get_current_user():
 def inject_current_user():
     """让 current_user 在所有模板中自动可用"""
     return dict(current_user=get_current_user())
-
-
-# --- 创建数据库表（在首次运行时） ---
-# 这段代码会检查所有定义好的模型，并在数据库中创建对应的表
-# with app.app_context():
-    # db.create_all()
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -253,4 +255,5 @@ def fetch_weather_now():
 # 4. 运行应用的代码块
 if __name__ == '__main__':
     # debug=True 表示调试模式开启，代码改动后服务器会自动重启
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port, debug=False)
