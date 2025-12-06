@@ -20,7 +20,7 @@ def fetch_weather(city='重庆', latitude=29.563, longitude=106.551):
         longitude: 经度
     """
     # Open-Meteo API 端点
-    url = f"https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m"
+    url = f"https://api.open-meteo.com/v1/forecast"
 
     # 请求参数
     params = {
