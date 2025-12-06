@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}用户登录{% endblock %}
+
+{% block content %}
+<h1>用户登录</h1>
+<form method="POST" action="{{ url_for('login') }}">
+    <div style="margin-bottom: 15px;">
+        <label for="username"><strong>用户名：</strong></label><br>
+        <input type="text" id="username" name="username" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="password"><strong>密码：</strong></label><br>
+        <input type="password" id="password" name="password" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px;">
+        登录
+    </button>
+</form>
+<p style="margin-top: 20px;">还没有账户？<a href="{{ url_for('register') }}">点击注册</a></p>
+{% endblock %}

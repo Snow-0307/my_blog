@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}用户注册{% endblock %}
+
+{% block content %}
+<h1>注册新账户</h1>
+<form method="POST" action="{{ url_for('register') }}">
+    <div style="margin-bottom: 15px;">
+        <label for="username"><strong>用户名：</strong></label><br>
+        <input type="text" id="username" name="username" required style="width: 100%; padding: 8px;">
+        <small>（长度在2-20个字符之间）</small>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="password"><strong>密码：</strong></label><br>
+        <input type="password" id="password" name="password" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
+        注册
+    </button>
+</form>
+<p style="margin-top: 20px;">已有账户？<a href="{{ url_for('login') }}">点击登录</a></p>
+{% endblock %}

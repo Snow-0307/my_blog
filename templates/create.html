@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}发布新文章{% endblock %}
+
+{% block content %}
+<h1>撰写新博客文章</h1>
+<form method="POST" action="{{ url_for('create_post') }}">
+    <div style="margin-bottom: 15px;">
+        <label for="title"><strong>标题：</strong></label><br>
+        <input type="text" id="title" name="title" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="content"><strong>内容：</strong></label><br>
+        <textarea id="content" name="content" rows="10" required style="width: 100%; padding: 8px;"></textarea>
+    </div>
+
+    <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
+        发布文章
+    </button>
+</form>
+{% endblock %}

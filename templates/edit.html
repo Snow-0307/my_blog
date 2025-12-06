@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}编辑文章{% endblock %}
+
+{% block content %}
+<h1>编辑文章</h1>
+<form method="POST">
+    <div style="margin-bottom: 15px;">
+        <label for="title"><strong>标题：</strong></label><br>
+        <!-- value属性用于预填数据 -->
+        <input type="text" id="title" name="title" value="{{ post.title }}" required style="width: 100%; padding: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="content"><strong>内容：</strong></label><br>
+        <!-- textarea的预填数据放在标签内部 -->
+        <textarea id="content" name="content" rows="10" required style="width: 100%; padding: 8px;">{{ post.content }}</textarea>
+    </div>
+
+    <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
+        更新文章
+    </button>
+</form>
+{% endblock %}

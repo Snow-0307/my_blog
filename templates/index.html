@@ -1,0 +1,57 @@
+<!-- 声明这个模板继承自 base.html -->
+{% extends "base.html" %}
+
+<!-- 定义要填充到 base.html 中 title 块的内容 -->
+{% block title %}我的技术博客{% endblock %}
+
+{% if current_user %}
+    <p>欢迎回来，<strong>{{ current_user.username }}</strong>！</p>
+{% else %}
+    <p>您尚未登录。<a href="{{ url_for('login') }}">请登录</a>或<a href="{{ url_for('register') }}">注册</a>。</p>
+{% endif %}
+
+<!-- 定义要填充到 content 块的内容 -->
+{% block content %}
+    <h1>我的博客文章</h1>
+
+    <!-- 安全检查：如果posts列表为空，显示友好提示 -->
+    {% if posts %}
+        <p>共 {{ post_count }} 篇文章：</p>
+        <!-- 开始循环：对posts列表中的每一篇文章(post)进行渲染 -->
+        {% for post in posts %}
+            <article class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <!-- 显示文章标题 (post.title 来自数据库) -->
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <!-- 显示文章发布日期，并格式化为‘年-月-日’ -->
+                    <small>
+                        作者:{{ post.author.username if post.author else '未知用户' }} |
+                        发布日期：{{ post.created_at.strftime('%Y-%m-%d') }}
+                    </small>
+                    <!-- 显示文章内容 (post.content 来自数据库) -->
+                    <p>{{ post.content }}</p>
+                    <!-- 未来可以在这里添加‘阅读更多’或‘编辑’的链接 -->
+                    {% if current_user and post.author and current_user.id == post.author.id %}
+                    <hr>
+                    <div style="margin-top: 10px;">
+                        <!-- 编辑按钮：跳转到编辑页面 -->
+                        <a href="{{ url_for('edit_post', post_id=post.id) }}" style="margin-right: 15px;">✏️ 编辑</a>
+
+                        <!-- 删除按钮：一个小表单，点击后直接提交到删除路由 -->
+                        <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST" style="display: inline;"
+                            onsubmit="return confirm('确定要删除这篇文章吗？此操作不可撤销。');">
+                            <button type="submit" style="background: none; border: none; color: red; cursor: pointer; padding: 0;">🗑️ 删除</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <!-- 如果数据库里一篇文章都没有，显示这个 -->
+        <div class="alert">
+            <p>还没有任何文章。</p>
+            <p><a href="{{ url_for('create_post') }}">点击这里撰写你的第一篇博客</a></p>
+        </div>
+    {% endif %}
+{% endblock %}
