@@ -1,7 +1,7 @@
 个人全栈博客系统
 
 一个使用Python Flask构建的功能完整的全栈个人博客，包含用户认证、文章管理、实时天气面板，并已部署至云端。
-在线访问：[https://my_blog.onrender.com](https://my-blog-wg11.onrender.com)
+在线访问：[https://my-blog-wg11.onrender.com](https://my-blog-wg11.onrender.com)
 
 核心功能：
 用户系统
